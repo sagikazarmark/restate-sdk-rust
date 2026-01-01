@@ -19,6 +19,7 @@ pub type HeaderMap = http::HeaderMap<String>;
 
 /// Service handler context.
 pub struct Context<'ctx> {
+    invocation_id: String,
     random_seed: u64,
     #[cfg(feature = "rand")]
     std_rng: rand::prelude::StdRng,
@@ -27,6 +28,11 @@ pub struct Context<'ctx> {
 }
 
 impl<'ctx> Context<'ctx> {
+    /// Get invocation id.
+    pub fn invocation_id(&self) -> &str {
+        &self.invocation_id
+    }
+
     /// Get request headers.
     pub fn headers(&self) -> &HeaderMap {
         &self.headers
@@ -41,6 +47,7 @@ impl<'ctx> Context<'ctx> {
 impl<'ctx> From<(&'ctx ContextInternal, InputMetadata)> for Context<'ctx> {
     fn from(value: (&'ctx ContextInternal, InputMetadata)) -> Self {
         Self {
+            invocation_id: value.1.invocation_id,
             random_seed: value.1.random_seed,
             #[cfg(feature = "rand")]
             std_rng: rand::prelude::SeedableRng::seed_from_u64(value.1.random_seed),
@@ -52,6 +59,7 @@ impl<'ctx> From<(&'ctx ContextInternal, InputMetadata)> for Context<'ctx> {
 
 /// Object shared handler context.
 pub struct SharedObjectContext<'ctx> {
+    invocation_id: String,
     key: String,
     random_seed: u64,
     #[cfg(feature = "rand")]
@@ -61,6 +69,11 @@ pub struct SharedObjectContext<'ctx> {
 }
 
 impl<'ctx> SharedObjectContext<'ctx> {
+    /// Get invocation id.
+    pub fn invocation_id(&self) -> &str {
+        &self.invocation_id
+    }
+
     /// Get object key.
     pub fn key(&self) -> &str {
         &self.key
@@ -80,6 +93,7 @@ impl<'ctx> SharedObjectContext<'ctx> {
 impl<'ctx> From<(&'ctx ContextInternal, InputMetadata)> for SharedObjectContext<'ctx> {
     fn from(value: (&'ctx ContextInternal, InputMetadata)) -> Self {
         Self {
+            invocation_id: value.1.invocation_id,
             key: value.1.key,
             random_seed: value.1.random_seed,
             #[cfg(feature = "rand")]
@@ -92,6 +106,7 @@ impl<'ctx> From<(&'ctx ContextInternal, InputMetadata)> for SharedObjectContext<
 
 /// Object handler context.
 pub struct ObjectContext<'ctx> {
+    invocation_id: String,
     key: String,
     random_seed: u64,
     #[cfg(feature = "rand")]
@@ -101,6 +116,11 @@ pub struct ObjectContext<'ctx> {
 }
 
 impl<'ctx> ObjectContext<'ctx> {
+    /// Get invocation id.
+    pub fn invocation_id(&self) -> &str {
+        &self.invocation_id
+    }
+
     /// Get object key.
     pub fn key(&self) -> &str {
         &self.key
@@ -120,6 +140,7 @@ impl<'ctx> ObjectContext<'ctx> {
 impl<'ctx> From<(&'ctx ContextInternal, InputMetadata)> for ObjectContext<'ctx> {
     fn from(value: (&'ctx ContextInternal, InputMetadata)) -> Self {
         Self {
+            invocation_id: value.1.invocation_id,
             key: value.1.key,
             random_seed: value.1.random_seed,
             #[cfg(feature = "rand")]
@@ -132,6 +153,7 @@ impl<'ctx> From<(&'ctx ContextInternal, InputMetadata)> for ObjectContext<'ctx> 
 
 /// Workflow shared handler context.
 pub struct SharedWorkflowContext<'ctx> {
+    invocation_id: String,
     key: String,
     random_seed: u64,
     #[cfg(feature = "rand")]
@@ -143,6 +165,7 @@ pub struct SharedWorkflowContext<'ctx> {
 impl<'ctx> From<(&'ctx ContextInternal, InputMetadata)> for SharedWorkflowContext<'ctx> {
     fn from(value: (&'ctx ContextInternal, InputMetadata)) -> Self {
         Self {
+            invocation_id: value.1.invocation_id,
             key: value.1.key,
             random_seed: value.1.random_seed,
             #[cfg(feature = "rand")]
@@ -154,6 +177,11 @@ impl<'ctx> From<(&'ctx ContextInternal, InputMetadata)> for SharedWorkflowContex
 }
 
 impl<'ctx> SharedWorkflowContext<'ctx> {
+    /// Get invocation id.
+    pub fn invocation_id(&self) -> &str {
+        &self.invocation_id
+    }
+
     /// Get workflow key.
     pub fn key(&self) -> &str {
         &self.key
@@ -172,6 +200,7 @@ impl<'ctx> SharedWorkflowContext<'ctx> {
 
 /// Workflow handler context.
 pub struct WorkflowContext<'ctx> {
+    invocation_id: String,
     key: String,
     random_seed: u64,
     #[cfg(feature = "rand")]
@@ -183,6 +212,7 @@ pub struct WorkflowContext<'ctx> {
 impl<'ctx> From<(&'ctx ContextInternal, InputMetadata)> for WorkflowContext<'ctx> {
     fn from(value: (&'ctx ContextInternal, InputMetadata)) -> Self {
         Self {
+            invocation_id: value.1.invocation_id,
             key: value.1.key,
             random_seed: value.1.random_seed,
             #[cfg(feature = "rand")]
@@ -194,6 +224,11 @@ impl<'ctx> From<(&'ctx ContextInternal, InputMetadata)> for WorkflowContext<'ctx
 }
 
 impl<'ctx> WorkflowContext<'ctx> {
+    /// Get invocation id.
+    pub fn invocation_id(&self) -> &str {
+        &self.invocation_id
+    }
+
     /// Get workflow key.
     pub fn key(&self) -> &str {
         &self.key
